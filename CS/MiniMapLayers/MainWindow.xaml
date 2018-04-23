@@ -1,0 +1,86 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map" 
+        x:Class="MiniMapLayers.MainWindow"
+        Title="MainWindow" Height="600" Width="800">
+
+    <Window.Resources>
+        <sys:String x:Key="bingKey">
+            Your Bing Key
+        </sys:String>
+
+        <XmlDataProvider x:Key="dataSource"  Source="Data/Ships.xml" XPath="/Ships"/>
+
+    </Window.Resources>
+    
+    <Grid>
+
+        <dxm:MapControl ZoomLevel="7" CenterPoint="-37, 142">
+            <dxm:MapControl.MiniMap>
+                <dxm:MiniMap Alignment="TopRight">
+                    <dxm:MiniMap.Behavior>
+                        <dxm:FixedMiniMapBehavior ZoomLevel="4" CenterPoint="-37, 146"/>
+                    </dxm:MiniMap.Behavior>
+                    <!--region #MiniMapImageTilesLayer-->
+                    <dxm:MiniMapImageTilesLayer>
+                        <dxm:BingMapDataProvider BingKey="{Binding Source={StaticResource bingKey}}"/>
+                    </dxm:MiniMapImageTilesLayer>
+                    <!--endregion #MiniMapImageTilesLayer-->
+                    <!--region #MiniMapVectorLayer-->
+                    <dxm:MiniMapVectorLayer ShapeFill="#FF4AD4FF">
+                        <dxm:ListSourceDataAdapter 
+                            DataSource="{Binding Source={StaticResource dataSource}, XPath=Ship}">
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <dxm:MapItemMappingInfo Latitude="Latitude" Longitude="Longitude"/>
+                            </dxm:ListSourceDataAdapter.Mappings>
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapDotSettings Size="10"/>
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:MiniMapVectorLayer>
+                    <!--endregion #MiniMapVectorLayer-->
+                </dxm:MiniMap>
+            </dxm:MapControl.MiniMap>
+            
+            <dxm:ImageTilesLayer>
+                <dxm:ImageTilesLayer.DataProvider>
+                    <dxm:BingMapDataProvider 
+                        BingKey="{Binding Source={StaticResource bingKey}}"/>
+                </dxm:ImageTilesLayer.DataProvider>
+            </dxm:ImageTilesLayer>    
+            <dxm:VectorLayer ToolTipEnabled="True"
+                             ToolTipPattern="{}{Name}({Year})&#13;&#10;{Description}">
+                <dxm:ListSourceDataAdapter 
+                    DataSource="{Binding Source={StaticResource dataSource}, XPath=Ship}">
+                    <dxm:ListSourceDataAdapter.Mappings>
+                        <dxm:MapItemMappingInfo Latitude="Latitude" Longitude="Longitude"/>
+                    </dxm:ListSourceDataAdapter.Mappings>
+                    <!--region #AttributeMappings-->
+                    <dxm:ListSourceDataAdapter.AttributeMappings>
+                        <dxm:MapItemAttributeMapping Member="Year" Name="Year"/>
+                        <dxm:MapItemAttributeMapping Member="Name" Name="Name"/>
+                        <dxm:MapItemAttributeMapping Member="Description" Name="Description"/>
+                    </dxm:ListSourceDataAdapter.AttributeMappings>
+                    <!--endregion #AttributeMappings-->
+                    <!--region #CustomElementSettings-->
+                    <dxm:ListSourceDataAdapter.ItemSettings> 
+                        <dxm:MapCustomElementSettings>
+                            <dxm:MapCustomElementSettings.ContentTemplate>
+                                <DataTemplate>
+                                    <Image Source="Images/Ship.png" Width="40" Height="40">
+                                        <Image.RenderTransform>
+                                            <TranslateTransform X="-20" Y="-20"/>
+                                        </Image.RenderTransform>
+                                    </Image>
+                                </DataTemplate>
+                            </dxm:MapCustomElementSettings.ContentTemplate>
+                        </dxm:MapCustomElementSettings>
+                    </dxm:ListSourceDataAdapter.ItemSettings>
+                    <!--endregion #CustomElementSettings-->
+                </dxm:ListSourceDataAdapter>
+            </dxm:VectorLayer>
+        </dxm:MapControl>
+    </Grid>
+</Window>
