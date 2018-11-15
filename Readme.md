@@ -1,3 +1,8 @@
+<!-- default file list -->
+*Files to look at*:
+
+* **[MainWindow.xaml](./CS/MiniMapLayers/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MiniMapLayers/MainWindow.xaml))**
+<!-- default file list end -->
 # How to customize a mini map's layers
 
 
