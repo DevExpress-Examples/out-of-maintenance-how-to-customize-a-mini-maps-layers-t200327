@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMapLayers", "MiniMapLayers\MiniMapLayers.csproj", "{2829186D-F316-426E-B529-7F7C00950652}"
+# Visual Studio 16
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMapLayers", "MiniMapLayers\MiniMapLayers.Net5.csproj", "{2829186D-F316-426E-B529-7F7C00950652}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
